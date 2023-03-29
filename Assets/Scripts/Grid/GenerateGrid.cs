@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class GenerateGrid : MonoBehaviour{
     void Start(){
-      Grid grid = new Grid(5,5, 10f);
+      Tile tile = new Tile(0, 0, 10f);
     }
 }
