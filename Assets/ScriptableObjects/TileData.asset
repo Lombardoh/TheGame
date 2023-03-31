@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: TileData
   m_EditorClassIdentifier: 
   tiles:
-  - Name: Grass
-    prefab: {fileID: 0}
-  - Name: 
-    prefab: {fileID: 0}
-  - Name: 
-    prefab: {fileID: 0}
-  - Name: 
-    prefab: {fileID: 0}
+  - name: 
+    prefab: {fileID: 6019370798566387825, guid: 500a742c28dc8a749af12386945ee7d4, type: 3}
+    tileType: 0
+  - name: 
+    prefab: {fileID: 6019370798566387825, guid: 7d31f52349f8d194dbb5980598e7c050, type: 3}
+    tileType: 3
+  - name: 
+    prefab: {fileID: 6019370798566387825, guid: da546f7fe4c48954581081c1b442f3e5, type: 3}
+    tileType: 2
+  - name: 
+    prefab: {fileID: 6019370798566387825, guid: 6278d9e828a5a14459bd0a85b292e5a9, type: 3}
+    tileType: 1
