@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc4686615178f14ebe4afd950995945, type: 3}
+  m_Name: ItemData
+  m_EditorClassIdentifier: 
+  items:
+  - name: River
+    ItemType: 0
+    material: {fileID: 2100000, guid: a992e72956e111f49b23887900b948f1, type: 2}
+  - name: Mountain
+    ItemType: 1
+    material: {fileID: 2100000, guid: 72b28a3b0707a574794aaa6aa6e325f8, type: 2}
+  - name: Grass
+    ItemType: 2
+    material: {fileID: 2100000, guid: 14a93e65e5ae0d041a53f4b5cdcca597, type: 2}

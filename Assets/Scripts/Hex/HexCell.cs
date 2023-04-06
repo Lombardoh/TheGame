@@ -2,32 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Based on a gameobject measured 2, 1.73, 2
+public class HexCell : MonoBehaviour{
+	[SerializeField]
+	public HexCell[] neighbors;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class HexCell : MonoBehaviour {
-  private float posX, posY, posZ;
-  private int x, z;
+  public HexCoordinates coordinates;
+  public Color color;
 
-  void Awake(){
-    Mesh mesh = GetComponent<MeshFilter>().mesh;
-    Vector3 size = mesh.bounds.size;
-  }
+  public HexCell GetNeighbor (HexDirection direction) {
+		return neighbors[(int)direction];
+	}
 
-  public void Init(float posX, float posY, float posZ, int x, int z){
-    this.posX = posX;
-    this.posY = posY;
-    this.posZ = posZ;
-    this.x = x;
-    this.z = z;
-    transform.name = x.ToString() + " " + z.ToString();
-  }
-
-  public Vector3 GetPos(){
-    return new Vector3(posX, posY, posZ);
-  }
-
-  public Vector3 GetCurrentCell(){
-    return new Vector2(posX, posZ);
-  }
+  public void SetNeighbor (HexDirection direction, HexCell cell) {
+		neighbors[(int)direction] = cell;
+    cell.neighbors[(int)direction.Opposite()] = this;
+	}
 }

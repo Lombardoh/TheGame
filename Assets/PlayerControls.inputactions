@@ -28,6 +28,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "MapControls",
+            "id": "2c38328e-9a78-46d7-af48-411eded215ae",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Value",
+                    "id": "261f3343-91c8-4930-b1f1-6796b4c721b8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "97c36747-15ed-4439-b7fe-5c85d43595ba",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

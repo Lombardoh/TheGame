@@ -50,6 +50,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MapControls"",
+            ""id"": ""2c38328e-9a78-46d7-af48-411eded215ae"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Value"",
+                    ""id"": ""261f3343-91c8-4930-b1f1-6796b4c721b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""97c36747-15ed-4439-b7fe-5c85d43595ba"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -57,6 +85,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
+        // MapControls
+        m_MapControls = asset.FindActionMap("MapControls", throwIfNotFound: true);
+        m_MapControls_Restart = m_MapControls.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -145,8 +176,45 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public MouseActions @Mouse => new MouseActions(this);
+
+    // MapControls
+    private readonly InputActionMap m_MapControls;
+    private IMapControlsActions m_MapControlsActionsCallbackInterface;
+    private readonly InputAction m_MapControls_Restart;
+    public struct MapControlsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public MapControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_MapControls_Restart;
+        public InputActionMap Get() { return m_Wrapper.m_MapControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MapControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IMapControlsActions instance)
+        {
+            if (m_Wrapper.m_MapControlsActionsCallbackInterface != null)
+            {
+                @Restart.started -= m_Wrapper.m_MapControlsActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_MapControlsActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_MapControlsActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_MapControlsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
+            }
+        }
+    }
+    public MapControlsActions @MapControls => new MapControlsActions(this);
     public interface IMouseActions
     {
         void OnClick(InputAction.CallbackContext context);
+    }
+    public interface IMapControlsActions
+    {
+        void OnRestart(InputAction.CallbackContext context);
     }
 }
