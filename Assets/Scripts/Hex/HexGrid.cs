@@ -22,12 +22,16 @@ public class HexGrid : MonoBehaviour {
 		}
 	}
 
-  public void updateCell(HexCoordinates coordinates){
-    int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
-		HexCell cell = cells[index];
-		cell.color = touchedColor;
-		hexMesh.Triangulate(cells);
+  public HexCell GetCell(Vector3 position){
+		position = transform.InverseTransformPoint(position);
+		HexCoordinates coordinates = HexCoordinates.FromPosition(position);
+		int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
+		return cells[index];
   }
+
+  public void Refresh () {
+		hexMesh.Triangulate(cells);
+	}
 	
   void Start(){
 		hexMesh.Triangulate(cells);
@@ -36,8 +40,14 @@ public class HexGrid : MonoBehaviour {
 	void CreateCell (int x, int z, int i) {
 		Vector3 position;
 		position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
-		position.y = 0f;
 		position.z = z * (HexMetrics.outerRadius * 1.5f);
+
+    float detailScale = 8f;
+    float xNoise = (x + transform.position.x) / detailScale;
+    float zNoise = (z + transform.position.z) / detailScale;
+    position.y = HexMetrics.elevationStep * (int)(10 * Mathf.PerlinNoise(xNoise, zNoise)) - 2f;
+
+    Debug.Log(position.y);
 
 		HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab);
 		cell.transform.SetParent(transform, false);

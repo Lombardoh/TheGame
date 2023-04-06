@@ -6,21 +6,24 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour, PlayerControls.IMouseActions{
   PlayerControls inputs;
   public HexGrid hexGrid;
+  int activeElevation = 1;
+  public Color defaultColor = Color.white;
 
   public void OnClick(InputAction.CallbackContext context){
     Vector3 pos = Mouse.current.position.ReadValue();
     Ray inputRay = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
 		if (Physics.Raycast(inputRay, out hit)) {
-			TouchCell(hit.point);
+      EditCell(hexGrid.GetCell(hit.point));
 		}
   }
 
-  void TouchCell(Vector3 position){
-		position = transform.InverseTransformPoint(position);
-		HexCoordinates coordinates = HexCoordinates.FromPosition(position);
-    hexGrid.updateCell(coordinates);
-  }
+  void EditCell(HexCell cell) {
+    cell.color = HexMetrics.activeColor;
+    cell.Elevation += activeElevation;
+    cell.transform.localPosition += new Vector3(0, cell.Elevation, 0);
+		hexGrid.Refresh();
+	}
 
   private void Awake(){
     hexGrid = GameObject.Find("HexGrid").GetComponent<HexGrid>();

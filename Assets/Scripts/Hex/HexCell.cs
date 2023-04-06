@@ -6,6 +6,19 @@ public class HexCell : MonoBehaviour{
 	[SerializeField]
 	public HexCell[] neighbors;
 
+  public int Elevation{
+    get{
+      return elevation;
+    }
+    set{
+      elevation = value;
+      Vector3 position = transform.localPosition;
+      position.y = value * HexMetrics.elevationStep;
+      transform.localPosition = position;
+    }
+  }
+
+  public int elevation;
   public HexCoordinates coordinates;
   public Color color;
 
